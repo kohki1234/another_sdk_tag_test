@@ -2,56 +2,47 @@
 
 <head>
     <script type="text/javascript">
-    !function(t,e){if(void 0===e[t]){e[t]=function(){e[t].clients.push(this),this._init=[Array.prototype.slice.call(arguments)]},e[t].clients=[];for(var r=function(t){return function(){return this["_"+t]=this["_"+t]||[],this["_"+t].push(Array.prototype.slice.call(arguments)),this}},s=["addRecord","set","trackEvent","trackPageview","trackClicks","ready","setSignedMode","fetchUserSegments","fetchGlobalID","setAnonymousMode"],a=0;a<s.length;a++){var c=s[a];e[t].prototype[c]=r(c)}var n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=("https:"===document.location.protocol?"https:":"http:")+"//cdn.treasuredata.com/sdk/1.7.1/td.min.js";var i=document.getElementsByTagName("script")[0];i.parentNode.insertBefore(n,i)}}("Treasure",this);
-        </script>
-
-    <script>
+    !function(t,e){if(void 0===e[t]){e[t]=function(){e[t].clients.push(this),this._init=[Array.prototype.slice.call(arguments)]},e[t].clients=[];for(var r=function(t){return function(){return this["_"+t]=this["_"+t]||[],this["_"+t].push(Array.prototype.slice.call(arguments)),this}},s=["blockEvents","fetchServerCookie","unblockEvents","setSignedMode","setAnonymousMode","resetUUID","addRecord","fetchGlobalID","set","trackEvent","trackPageview","trackClicks","ready", "fetchUserSegments","getCookie", "fetchServerCookie"],n=0;n<s.length;n++){var o=s[n];e[t].prototype[o]=r(o)}var c=document.createElement("script");c.type="text/javascript",c.async=!0,c.src=("https:"===document.location.protocol?"https:":"http:")+"//cdn.treasuredata.com/sdk/2.4/td.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(c,a)}}("Treasure",this); 
         // Configure an instance for your database
         var td = new Treasure({
             host: 'in.treasuredata.com',
             writeKey: '10452/de7bec368253e78d34c4ff6c9d52145a32f117b9',
             database: 'kohki_test',
-            startInSignedMode: true
-
+            // storage : {
+            //     name:'_cookie_td',
+            //     expires: 0
+            //     },
+            // logging: true,
+            // globalIdCookie: '_td_global_hoge',
+            storeConsentByLocalStorage: true
         });
-        // Enable cross-domain tracking
-
-        var successCallback = function(globalId) {
-            console.log(globalId)
-
-        };
-
-        var errorCallback = function(error) {
-            console.log("ERROR CALL BACK")
-        };
-
-        td.setSignedMode();
-        
+            
 
         td.set('$global', 'td_global_id', 'td_global_id');
+        td.trackPageview('hoge_cookie_test2');
 
-        // Track pageview information to a table
-        td.trackPageview('new_sdk_test_2');
+        function buttonClick(){
+            console.log('button was clicked')
+            var params = {
+                td_client_id: 'td_client_id',
+                itemId: 101,
+                saleId: 10,
+                userId: 1,
+                button_click: 'button is pressed',
+                type: 'td.addRecord'
+                };
 
-        td.fetchUserSegments({
-            audienceToken: ['fe4796f3-eb0a-483c-b391-2ed076460353'],
-            keys: {
-                user_id : 'TEST02459259',
-                td_country_name: 'Japan'
-            }
-        }, successCallback, errorCallback)
+            // td_client_idなどのデフォルトで計測されるカラムを含めず(指定したレコードのみ計測される)
+            td.addRecord('click_events', params);
 
-        var successCallback_global = function (td_global_id) {
-            console.log(td_global_id)
-        };
+            // td_client_idなどのデフォルトで計測されるカラムを含めてレコードが記録される
+            td.trackEvent('track_events', {
+                number: 150000000000,
+                type: 'td.trackEvent'
+            });
 
-        var errorCallback_global = function (error) {
-            console.log('failed')
         }
-
-        td.fetchGlobalID(successCallback_global, errorCallback_global)
-
-
+    
     </script>
 
     <!-- =======================================================
@@ -81,8 +72,15 @@
     </script>
 </head>
 
-<body>JavaSript SDK test page with Node JS server</body>
+<body>
 
-<button onclick=""></button>
+    <!-- <button id="btn" onclick="buttonClick()">表示</button> -->
+
+    <br>
+    <a href="https://www.homepage-tukurikata.com/html/a-href.html" id="btn" onclick="buttonClick()">リンク推移</a>
+
+    <br>
+    <button id="fakebutton" onclick="buttonClick()">Fake button</button>
+</body>
 
 </html>
