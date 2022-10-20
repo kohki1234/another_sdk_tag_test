@@ -7,7 +7,7 @@
         <script type="text/javascript">
           // Configure an instance for your database
            var td = new Treasure({
-             database: 'kohki_test',
+             database: 'master_segment_test_kohki',
              writeKey: '10452/de7bec368253e78d34c4ff6c9d52145a32f117b9',
              useNewJavaScriptEndpoint: true,
              host: 'us01.records.in.treasuredata.com'
@@ -22,7 +22,13 @@
           // Enable cross-domain tracking
           td.set('$global', 'td_global_id', 'td_global_id');
           // Track pageview information to 'pageviews' table
-          td.trackPageview('pageviews');
+          td.trackPageview('js_sdk_data_test');
+          td.trackEvent('js_sdk_data_test', {
+               id: 3,
+               type: 'td.trackEvent',
+               comment: 'real-time segment test'
+           });
+
         </script>
 
     <!-- =======================================================
