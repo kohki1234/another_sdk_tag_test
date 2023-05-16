@@ -29,6 +29,21 @@
 
         function buttonClick(){
             console.log('button was clicked')
+
+            // Receive td_global_id   
+            var successCallback = function(td_global_id) {
+            console.log({
+                'td_global_id': td_global_id
+            });
+            };
+            var errorCallback = function(err) {
+                console.log(err);
+            };
+
+            var afterPageviewCallback = function() {
+                td.fetchGlobalID(successCallback, errorCallback);
+            };
+
             var params = {
                 td_client_id: 'td_client_id',
                 itemId: 101,
