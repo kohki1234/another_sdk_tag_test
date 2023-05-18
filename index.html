@@ -18,13 +18,13 @@
             storeConsentByLocalStorage: true
         });
             
-        if (typeof Storage !== "undefined") {
-            Object.defineProperty(window, "localStorage", {
-                value: null,
-                configurable: false,
-                writable: false
-            });
-}
+
+        Object.defineProperty(window, "localStorage", {
+            value: null,
+            configurable: false,
+            writable: false
+        });
+
 
         
         // td.setSignedMode()
