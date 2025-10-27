@@ -1,134 +1,72 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-    <script type="text/javascript">
-    !function(t,e){if(void 0===e[t]){e[t]=function(){e[t].clients.push(this),this._init=[Array.prototype.slice.call(arguments)]},e[t].clients=[];for(var r=function(t){return function(){return this["_"+t]=this["_"+t]||[],this["_"+t].push(Array.prototype.slice.call(arguments)),this}},s=["blockEvents","fetchServerCookie","unblockEvents","setSignedMode","setAnonymousMode","resetUUID","addRecord","fetchGlobalID","set","trackEvent","trackPageview","trackClicks","ready", "fetchUserSegments","getCookie", "fetchServerCookie"],n=0;n<s.length;n++){var o=s[n];e[t].prototype[o]=r(o)}var c=document.createElement("script");c.type="text/javascript",c.async=!0,c.src=("https:"===document.location.protocol?"https:":"http:")+"//cdn.treasuredata.com/sdk/2.5/td.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(c,a)}}("Treasure",this); 
-        // Configure an instance for your database
-        var td = new Treasure({
-            host: 'us01.records.in.treasuredata.com',
-          writeKey: '10452/de7bec368253e78d34c4ff6c9d52145a32f117b9',
-          database: 'master_segment_test_kohki'
-        });
+<meta charset="utf-8">
+<title>test tracking</title>
+<script type="text/javascript">
+!function(t,e){if(void 0===e[t]){e[t]=function(){e[t].clients.push(this),this._init=[Array.prototype.slice.call(arguments)]},e[t].clients=[];for(var r=function(t){return function(){return this["_"+t]=this["_"+t]||[],this["_"+t].push(Array.prototype.slice.call(arguments)),this}},s=["addRecord","blockEvents","fetchServerCookie","fetchGlobalID","fetchUserSegments","resetUUID","ready","setSignedMode","setAnonymousMode","set","trackEvent","trackPageview","trackClicks","unblockEvents"],n=0;n<s.length;n++){var c=s[n];e[t].prototype[c]=r(c)}var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=("https:"===document.location.protocol?"https:":"http:")+"//cdn.treasuredata.com/sdk/2.5/td.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)}}("Treasure",this);
+</script>
+<script type="text/javascript">
+// Configure an instance for your database
+var td = new Treasure({
+host: 'eu01.records.in.treasuredata.com',
+database: 'tracking_web',
+writeKey: '55/85c5c99b90e1affeca49dd7aee81fead51191593'
+});
+
+var page_info = {
+page_domain: 'testi20',
+page_full_domain: 'madame.lefigaro.fr',
+page_seen_een: '1-dfrtyuiolsdfghjkl',
+page_visitorid: '1234567',
+page_category: 'article',
+page_level1: 'recette',
+page_level2: 'entree',
+page_level3: 'entree froide',
+page_tagname1: 'recette coriandre',
+page_tagname2: 'recette crabe',
+page_tagname2: 'recette saumon',
+page_articleid: '3456789',
+page_author: 'maryam castex2',
+page_subscriptioncontentstate: 'ouvert',
+page_subscriptioncontenttype: 'gratuit',
+page_userstatus: 'abonne',
+page_subscription: 'access',
+page_userstate: 'connecte',
+page_utm_content: 'dfghj',
+page_utm_medium: 'email',
+page_utm_source: 'crm',
+page_utm_campaign: '20250326_NL_TECHWEB',
+page_utm_term: ''
+};
 
 
-        td.set('$global', 'td_global_id', 'td_global_id');
-        td.trackPageview('js_sdk_data_test_70491');
-        td.trackEvent('js_sdk_data_test_70491', {
-               id: 6,
-               type: 'td.trackEvent',
-               comment: 'real-time segment test',
-               another_time_col: 1707394020
-           });
+td.setSignedMode();
 
-        function buttonClick(){
-            console.log('button was clicked')
-            var params = {
-                td_client_id: 'td_client_id',
-                itemId: 101,
-                saleId: 10,
-                userId: 1,
-                button_click: 'button is pressed',
-                type: 'td.addRecord'
-                };
+// Enable cross-domain tracking
+td.set('$global', 'td_global_id', 'td_global_id');
 
-            td.trackClicks()
+td.set('pageviews', page_info );
 
-            // td_client_idなどのデフォルトで計測されるカラムを含めず(指定したレコードのみ計測される)
-            td.addRecord('kohki_test_rename', params);
+td.trackPageview('pageviews');
+//td.inSignedMode();
+//td.setAnonymousMode();
 
-            // td_client_idなどのデフォルトで計測されるカラムを含めてレコードが記録される
-            td.trackEvent('track_events', {
-               id: 1,
-               type: 'td.trackEvent'
-           });
+var td_us = new Treasure({
+host: 'us01.records.in.treasuredata.com',
+database: 'kohki_test',
+writeKey: '10452/de7bec368253e78d34c4ff6c9d52145a32f117b9'
+});
 
-            td.fetchUserSegments({
-            audienceToken: ['dcca7b69-ec28-4610-a335-8d5be4237269'],
-            keys: {
-                id: '6'
-            }
-            }, successCallback, errorCallback)
-        }
-    
-        var successCallback = function (values) {
-            console.log(values)
-            };
+td_us.setSignedMode();
 
-            var errorCallback = function (error) {
-            console.log('Profile API got error')
-            };
+td_us.trackPageview('pageviews_us');
 
-        td.fetchUserSegments({
-            audienceToken: ['dcca7b69-ec28-4610-a335-8d5be4237269'],
-            keys: {
-                id: '6'
-            }
-            }, successCallback, errorCallback)
-    </script>
-
-    <!-- =======================================================
-  Start https://cookieconsent.insites.com/ tag
-  ======================================================= -->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
-    <script>
-        window.addEventListener("load", function() {
-            window.cookieconsent.initialise({
-                "palette": {
-                    "popup": {
-                        "background": "#3c404d",
-                        "text": "#d6d6d6"
-                    },
-                    "button": {
-                        "background": "#8bed4f"
-                    }
-                },
-                "type": "opt-out",
-                "revokable": true,
-                onStatusChange: function(status) {
-                    this.hasConsented() ? td.setSignedMode() : td.setAnonymousMode();
-                },
-            })
-        });
-    </script>
+</script>
 </head>
-
 <body>
 
-    <!-- <button id="btn" onclick="buttonClick()">表示</button> -->
-
-    <br>
-    <a href="https://sub.kohki1234.github.io/another_sdk_tag_test/" id="btn" onclick="buttonClick()">リンク推移</a>
-
-    <br>
-    <button id="fakebutton" onclick="buttonClick()">Fake button</button>
-    <a href="https://test@example.com" >click</a>
-
-    <br>
-    <br>
-
-    <div style="padding:20px">
-        <code >
-            REAL TIME SEGMENT検証
-            <br>
-            SELECT 2
-        </code>
-
-    </div>
-
-    <div>
-
-        <iframe id="ifm" name="ifm" width="100%" height="100%" frameborder="0" src="https://us01-02.reporting.treasuredata.com/app/main/dashboards/63878ec3e0243600374514e4?embed=true" scrolling="auto"></iframe>
-
-
-    </div>
-
-    <div>
-
-        <iframe id="ifm" name="ifm" width="100%" height="100%" frameborder="0" src="https://td-us01-02.sisense.com/app/main#/dashboards/63878ec3e0243600374514e4" scrolling="auto"></iframe>
-    </div>
-
+blalala lala ss
 
 </body>
-
 </html>
