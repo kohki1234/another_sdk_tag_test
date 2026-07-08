@@ -14,7 +14,16 @@
 
         td.set('$global', 'td_global_id', 'td_global_id');
         td.trackPageview('js_sdk_data_test_70491');
-        client_id = td.getTrackValues().td_client_id
+
+        
+        td.ready(function () {
+            var client_id = td.getTrackValues().td_client_id;
+            console.log('td_client_id: ' + client_id);
+        });        
+
+
+
+        
         console.log ('td.getCookie: ' + client_id)
         td.trackEvent('js_sdk_data_test_70491', {
                id: 6,
